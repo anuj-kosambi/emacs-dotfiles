@@ -47,7 +47,7 @@
 
 
 
-(add-hook 'web-mode-hook #'lsp)
+(add-hook 'web-mode-hook #'lsp-deferred)
 (add-hook 'web-mode-hook 'prettier-js-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

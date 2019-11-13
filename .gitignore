@@ -52,3 +52,5 @@ flycheck_*.el
 projectile-*
 quelpa
 recentf
+projectile.*
+transient
