@@ -54,3 +54,5 @@ quelpa
 recentf
 projectile.*
 transient
+.graphql.variables
+request
