@@ -21,6 +21,14 @@
 (setq web-mode-content-types-alist
   '(("jsx" . "\\.js\\'")))
 
+;; for better jsx syntax-highlighting in web-mode
+;; - courtesy of Patrick @halbtuerke
+(defadvice web-mode-highlight-part (around tweak-jsx activate)
+  (if (equal web-mode-content-type "jsx")
+    (let ((web-mode-enable-part-face nil))
+      ad-do-it)
+    ad-do-it))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Lsp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -42,10 +50,10 @@
 (add-hook 'web-mode-hook #'lsp)
 (add-hook 'web-mode-hook 'prettier-js-mode)
 
-
-
-
-;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Snippets
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package yasnippet
    :ensure t)
 (yas-global-mode 1)
+
