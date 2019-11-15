@@ -11,6 +11,11 @@
 
 (setq ring-bell-function 'ignore)
 
+;; (setq backup-directory-alist
+;;      `((".*" . temporary-file-directory))
+;;      auto-save-file-name-transforms
+;;     `((".*" ,temporary-file-directory t)))  
+
 (setq-default left-fringe-width  0)
 (setq-default right-fringe-width  0)
 (set-face-attribute 'fringe nil :background "black")
@@ -28,9 +33,11 @@
       :ensure t
       :hook (after-init . doom-modeline-mode)
       :config
+      (setq doom-modeline-height 16)
       (setq doom-modeline-buffer-file-name-style 'relative-to-project)
       (setq doom-modeline-major-mode-icon t)
       (setq doom-modeline-minor-modes (featurep 'minions))
 )
 
+(setq doom-modeline-height 16)
 (setq ivy-posframe-border-width 16)

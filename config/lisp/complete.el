@@ -11,8 +11,6 @@
 (add-to-list 'company-backends 'company-lsp)
 (add-to-list 'company-backends 'company-dabbrev)
 
-
-
 (use-package company-try-hard
   :ensure t
   )

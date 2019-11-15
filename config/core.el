@@ -1,6 +1,5 @@
 (setq exec-path (append '("/usr/local/bin") exec-path))
 
-
 (add-to-list 'load-path "~/.emacs.d/packages")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

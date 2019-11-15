@@ -1,4 +1,4 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybinding User 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -29,6 +29,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-key evil-normal-state-map (kbd "SPC w v") 'split-window-right)
+(define-key evil-normal-state-map (kbd "SPC w l") 'windmove-right)
+(define-key evil-normal-state-map (kbd "SPC w h") 'windmove-left)
+(define-key evil-normal-state-map (kbd "SPC w j") 'windmove-up)
+(define-key evil-normal-state-map (kbd "SPC w k") 'windmove-down)
 (define-key evil-normal-state-map (kbd "SPC w s") 'split-window-below)
 
 
