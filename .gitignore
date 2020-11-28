@@ -56,3 +56,14 @@ projectile.*
 transient
 .graphql.variables
 request
+
+
+.cache
+.dap-breakpoints
+eln-cache
+elpy
+session.*
+.local
+
+/url/
+/ede-projects.el
