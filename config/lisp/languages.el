@@ -5,18 +5,34 @@
   :ensure t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Web-Mode
+;;; Javascript/Typescript
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package tree-sitter
+  :ensure t)
+
+(use-package tree-sitter-langs
+  :ensure t)
+
 (use-package web-mode
   :ensure t
-  :mode ("\\.js$" . web-mode)
+  :mode (("\\.js$" . web-mode)
+	 ("\\.jsx$" . web-mode))
   :init
   (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-expanding t)
   (setq web-mode-enable-css-colorization t)
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
-(add-to-list 'auto-mode-alist '("\\.js$" . web-mode)) ;; auto-enable for .js/.jsx files
+(use-package typescript-mode
+  :mode "\\.ts.$"
+  :hook (typescript-mode . lsp-deferred)
+  :config
+  (setq typescript-indent-line 2))
+
+(add-hook 'typescript-mode-hook #'tree-sitter-hl-mode)
+
+(add-to-list 'auto-mode-alist '("\\.js" . web-mode)) ;; auto-enable for .js/.jsx files
+(add-to-list 'auto-mode-alist '("\\.jsx" . web-mode)) ;; auto-enable for .js/.jsx files
 
 (setq web-mode-content-types-alist
   '(("jsx" . "\\.js\\'")))
@@ -51,7 +67,7 @@
 (use-package lsp
   :ensure lsp-mode
   :config
-  (require 'lsp-clients)
+  ;;(require 'lsp-clients)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
   :init
   (setf lsp-eldoc-render-all nil)
@@ -60,10 +76,11 @@
 
 
 (use-package lsp-ui
-  :ensure t)
+  :ensure t
+  :init (setq lsp-ui-sideline-enable t))
 
-(add-hook 'web-mode-hook #'lsp-deferred)
-(add-hook 'web-mode-hook 'prettier-js-mode)
+;;(add-hook 'typescript-mode-hook #'lsp-deferred)
+;;(add-hook 'typescript-mode-hook 'prettier-js-mode)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Java
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,6 +106,27 @@
         lsp-java-save-action-organize-imports nil)
 
 (setq lsp-java-configuration-check-project-settings-exclusions nil)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp-deferred))))  ; or lsp-deferred;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'python-mode
+	  (lambda ()(setq python-indent-offset 2)))
+
+;;; elpy
+(use-package elpy
+  :ensure t
+  :defer t
+  :init
+  (advice-add 'python-mode :before 'elpy-enable))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Snippets
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -96,3 +134,10 @@
    :ensure t)
 (yas-global-mode 1)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Python
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package go-mode
+  :ensure t)
+(add-hook 'go-mode-hook 'lsp-deferred)

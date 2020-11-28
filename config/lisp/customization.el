@@ -3,6 +3,7 @@
 ;; User Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (column-number-mode t)
+;;(global-display-line-numbers-mode t)
 (size-indication-mode t)
 (toggle-scroll-bar 0)
 (tool-bar-mode 0)
@@ -25,7 +26,7 @@
   :config
     (setq doom-themes-enable-bold t
 	   doom-themes-enable-italic t) 
-    (load-theme 'doom-snazzy t)
+    (load-theme 'doom-horizon t)
     (doom-themes-org-config)
   )
 
@@ -41,3 +42,7 @@
 
 (setq doom-modeline-height 16)
 (setq ivy-posframe-border-width 16)
+
+(setq linum-format "%10d")
+;;(global-linum-mode 1)
+;;(setq global-tab-line-mode 0)

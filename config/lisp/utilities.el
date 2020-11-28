@@ -17,6 +17,9 @@
   :config
   (global-git-gutter-mode +1))
 
+(set-face-background 'git-gutter:modified "#FCFC99") ;; background color
+(set-face-foreground 'git-gutter:added "#0CC078")
+(set-face-foreground 'git-gutter:deleted "#FB6962")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Undotree Mode
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -102,3 +105,9 @@
 
 (setq all-the-icons-ivy-file-commands
       '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))
+
+
+
+
+(use-package yafolding
+  :ensure t)

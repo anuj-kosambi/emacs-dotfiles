@@ -2,13 +2,13 @@
     :ensure t
     :config
     (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 0)
+    (setq company-minimum-prefix-length 1)
     (global-company-mode t))
 
-(use-package company-lsp
-  :ensure t)
+;; (use-package company-capf
+;;   :ensure t)
 
-(add-to-list 'company-backends 'company-lsp)
+(add-to-list 'company-backends 'company-capf)
 (add-to-list 'company-backends 'company-dabbrev)
 
 (use-package company-try-hard
@@ -73,5 +73,14 @@
 	      (Template . ,(all-the-icons-faicon "code" :height 0.7 :v-adjust 0.02 :face 'font-lock-variable-name-face)))))
   )
 
-                                                                                                                                                                                                                                              
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; python auto-complete
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun lsp--sort-completions (completions)
+  (lsp-completion--sort-completions completions))
 
+(defun lsp--annotate (item)
+  (lsp-completion--annotate item))
+
+(defun lsp--resolve-completion (item)
+  (lsp-completion--resolve item))
