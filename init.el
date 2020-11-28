@@ -26,7 +26,7 @@
  '(ivy-use-virtual-buffers t)
  '(ivy-virtual-abbreviate 'full)
  '(package-selected-packages
-   '(tree-sitter-langs tree-sitter company-capf go-mode xwwp typescript-mode blacken python-black git-gutter magit flycheck company-try-hard company-fuzzy company-lsp lsp-ivy highlight-indent-guides editorconfig exec-path-from-shell undo-tree yasnippet web-mode use-package prettier-js lsp-mode ivy-rich counsel-projectile))
+   '(poly-markdown markdown-mode+ dockerfile-mode docker-mode lsp-docker tree-sitter-langs tree-sitter company-capf go-mode xwwp typescript-mode blacken git-gutter magit flycheck company-try-hard company-fuzzy company-lsp lsp-ivy highlight-indent-guides editorconfig exec-path-from-shell undo-tree yasnippet web-mode use-package prettier-js lsp-mode ivy-rich counsel-projectile))
  '(size-indication-mode t)
  '(tool-bar-mode nil))
 (custom-set-faces

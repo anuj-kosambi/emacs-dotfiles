@@ -2,8 +2,8 @@
     :ensure t
     :config
     (setq company-idle-delay 0)
-    (setq company-minimum-prefix-length 1)
-    (global-company-mode t))
+    (setq company-minimum-prefix-length 0)
+    (global-company-mode +1))
 
 ;; (use-package company-capf
 ;;   :ensure t)
@@ -11,9 +11,9 @@
 (add-to-list 'company-backends 'company-capf)
 (add-to-list 'company-backends 'company-dabbrev)
 
-(use-package company-try-hard
-  :ensure t
-  )
+;; (use-package company-try-hard
+;;   :ensure t
+;;   )
 
 (use-package company-box
     :ensure t

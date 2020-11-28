@@ -1,4 +1,4 @@
-;inexinex;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybinding User 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
@@ -10,11 +10,14 @@
 (define-key evil-visual-state-map (kbd "SPC c t") 'comment-or-uncomment-region)
 
 
+(define-key evil-normal-state-map (kdb "M-L") 'format-all-buffer)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Git 
+;; git 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key evil-normal-state-map (kbd "SPC g s") 'magit)
 (define-key evil-normal-state-map (kbd "SPC g l") 'magit-log-all)
+(define-key evil-normal-state-map (kbd "SPC g k") 'git-gutter:revert-hunk)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project

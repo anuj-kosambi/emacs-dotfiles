@@ -24,6 +24,7 @@
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
 (use-package typescript-mode
+  :ensure t
   :mode "\\.ts.$"
   :hook (typescript-mode . lsp-deferred)
   :config
@@ -44,7 +45,6 @@
     (let ((web-mode-enable-part-face nil))
       ad-do-it)
     ad-do-it))
-
 
 (use-package json-mode
   :ensure t)
@@ -116,7 +116,6 @@
   :hook (python-mode . (lambda ()
                           (require 'lsp-python-ms)
                           (lsp-deferred))))  ; or lsp-deferred;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (add-hook 'python-mode
 	  (lambda ()(setq python-indent-offset 2)))
 
@@ -141,3 +140,38 @@
 (use-package go-mode
   :ensure t)
 (add-hook 'go-mode-hook 'lsp-deferred)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Docker
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package dockerfile-mode
+  :ensure t
+  :mode "[\\.]Dockerfile")
+(use-package lsp-docker
+  :ensure t)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MDX
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package poly-markdown
+  :ensure t)
+
+
+
+(defcustom poly-inner-typescript-mode
+  (typescript-mode)
+  "MDX mode for typescript"
+  :group 'poly-innermodes
+  :type 'object)
+
+
+(define-polymode poly-markdown-typescript-mode poly-markdown-mode
+  :innermodes '(poly-inner-typescript-mode :inherit))
+
+
+(add-to-list 'auto-mode-alist '("\\.mdx" . poly-markdown-typescript-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Auto-format
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package format-all
+  :ensure t)
