@@ -4,20 +4,20 @@
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
 (define-key evil-normal-state-map (kbd "SPC i") 'counsel-imenu)
-(define-key evil-normal-state-map (kbd "SPC e") 'counsel-recentf)
 (define-key evil-normal-state-map (kbd "SPC l") 'swiper)
 (define-key evil-normal-state-map (kbd "g d") 'lsp-find-definition)
 (define-key evil-visual-state-map (kbd "SPC c t") 'comment-or-uncomment-region)
+(define-key evil-visual-state-map (kbd "M-/") 'comment-or-uncomment-region)
+(global-set-key (kbd "M-f") 'avy-goto-word-1)
 
-
-(define-key evil-normal-state-map (kdb "M-L") 'format-all-buffer)
+(global-set-key (kbd "M-L") 'format-all-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; git 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-key evil-normal-state-map (kbd "SPC g s") 'magit)
-(define-key evil-normal-state-map (kbd "SPC g l") 'magit-log-all)
-(define-key evil-normal-state-map (kbd "SPC g k") 'git-gutter:revert-hunk)
+(global-set-key (kbd "M-g s") 'magit)
+(global-set-key (kbd "M-g l") 'magit-log-all)
+(global-set-key (kbd "M-g k") 'git-gutter:revert-hunk)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Project
@@ -26,6 +26,13 @@
 (define-key evil-normal-state-map (kbd "SPC SPC") 'counsel-projectile-find-file)
 (define-key evil-normal-state-map (kbd "SPC .") 'counsel-find-file)
 (define-key evil-normal-state-map (kbd "SPC b b") 'counsel-projectile-switch-to-buffer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Buffers
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(global-set-key (kbd "M-[") 'previous-buffer)
+(global-set-key (kbd "M-]") 'next-buffer)
+(define-key evil-normal-state-map (kbd "M-e") 'counsel-recentf)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Windows
@@ -45,12 +52,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Lsp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(global-set-key (kbd "M-\\") 'treemacs)
 (define-key evil-normal-state-map (kbd "M-g M-d") 'lsp-ui-peek-find-definitions)
 (define-key evil-normal-state-map (kbd "M-g M-r") 'lsp-ui-peek-find-references)
 (define-key evil-normal-state-map (kbd "M-s M-s") 'lsp-treemacs-symbols)
 (define-key evil-normal-state-map (kbd "M-F") 'counsel-git-grep)
 
+(global-set-key (kbd "M-RET") 'lsp-ui-sideline-apply-code-actions)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Folding
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

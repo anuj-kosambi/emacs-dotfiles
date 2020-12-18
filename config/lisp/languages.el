@@ -1,49 +1,53 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Prettier
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Prettier & Highlight
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package prettier-js
   :ensure t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Javascript/Typescript
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package tree-sitter
   :ensure t)
-
 (use-package tree-sitter-langs
   :ensure t)
 
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Javascript/Typescript
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package web-mode
   :ensure t
   :mode (("\\.js$" . web-mode)
 	 ("\\.jsx$" . web-mode))
+  :hook (web-mode . lsp-deferred)
   :init
   (setq web-mode-enable-auto-pairing t)
   (setq web-mode-enable-auto-expanding t)
   (setq web-mode-enable-css-colorization t)
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
+(add-hook 'web-mode-hook 'prettier-js-mode)
+
 (use-package typescript-mode
   :ensure t
   :mode "\\.ts.$"
   :hook (typescript-mode . lsp-deferred)
-  :config
-  (setq typescript-indent-line 2))
+  :config)
 
 (add-hook 'typescript-mode-hook #'tree-sitter-hl-mode)
+(add-hook 'typescript-mode-hook 'prettier-js-mode)
 
 (add-to-list 'auto-mode-alist '("\\.js" . web-mode)) ;; auto-enable for .js/.jsx files
 (add-to-list 'auto-mode-alist '("\\.jsx" . web-mode)) ;; auto-enable for .js/.jsx files
 
 (setq web-mode-content-types-alist
-  '(("jsx" . "\\.js\\'")))
+      '(("jsx" . "\\.js\\'")))
 
 ;; for better jsx syntax-highlighting in web-mode
 ;; - courtesy of Patrick @halbtuerke
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
-    (let ((web-mode-enable-part-face nil))
-      ad-do-it)
+      (let ((web-mode-enable-part-face nil))
+	ad-do-it)
     ad-do-it))
 
 (use-package json-mode
@@ -62,25 +66,54 @@
 ;;; Lsp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package lsp-mode
-  :ensure t)
+  :commands lsp
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-keymap-prefix "M-m l")
+  (lsp-modeline-diagnostics-enable nil)
+  (lsp-keep-workspace-alive nil)
+  (lsp-auto-execute-action nil)
+  (lsp-before-save-edits nil)
+  (lsp-eldoc-enable-hover nil)
+  (lsp-diagnostic-package :none)
+  (lsp-completion-provider :none)
+  (lsp-file-watch-threshold 1500)  ; pyright has more than 1000
+  (lsp-enable-links nil)
+  ;; Maybe set in future:
+  ;;(lsp-enable-on-type-formatting nil)
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration))
+
 
 (use-package lsp
   :ensure lsp-mode
   :config
   ;;(require 'lsp-clients)
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
+  (add-hook 'lsp-after-open-hook 'lsp-headerline-breadcrumb-mode)
   :init
-  (setf lsp-eldoc-render-all nil)
-  (setq lsp-inhibit-message t)
-  (setq lsp-message-project-root-warning t))
+  (setq lsp-eldoc-render-all nil))
 
+(setq read-process-output-max (* 1024 1024)) ; 1mb
 
 (use-package lsp-ui
   :ensure t
-  :init (setq lsp-ui-sideline-enable t))
-
-;;(add-hook 'typescript-mode-hook #'lsp-deferred)
-;;(add-hook 'typescript-mode-hook 'prettier-js-mode)
+  :after lsp-mode
+  :custom
+  (lsp-ui-doc-position 'top)
+  (lsp-ui-sideline-delay 0.5)
+  (lsp-ui-doc-delay 0.5)
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-peek-fontify 'always)
+  :custom-face
+  (lsp-ui-peek-highlight ((t (:inherit nil :background nil :foreground nil :weight semi-bold :box (:line-width -1)))))
+  :bind
+  ([remap xref-find-references] . lsp-ui-peek-find-references)
+  ("M-b" . lsp-find-definition)
+  :config
+  ;;;; LSP UI posframe ;;;;
+  )
+(add-hook 'typescript-mode-hook #'lsp-deferred)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Java
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -92,18 +125,18 @@
 
 (setq lsp-java-vmargs
       (list
-         "-noverify"
-         "-Xmx1G"
-         "-XX:+UseG1GC"
-         "-XX:+UseStringDeduplication")
-	lsp-file-watch-ignored
-        '(".idea" ".ensime_cache" ".eunit" "node_modules"
-          ".git" ".hg" ".fslckout" "_FOSSIL_"
-          ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
-          "build")
-        lsp-java-import-order '["" "java" "javax" "#"]
-        ;; Don't organize imports on save
-        lsp-java-save-action-organize-imports nil)
+       "-noverify"
+       "-Xmx1G"
+       "-XX:+UseG1GC"
+       "-XX:+UseStringDeduplication")
+      lsp-file-watch-ignored
+      '(".idea" ".ensime_cache" ".eunit" "node_modules"
+        ".git" ".hg" ".fslckout" "_FOSSIL_"
+        ".bzr" "_darcs" ".tox" ".svn" ".stack-work"
+        "build")
+      lsp-java-import-order '["" "java" "javax" "#"]
+      ;; Don't organize imports on save
+      lsp-java-save-action-organize-imports nil)
 
 (setq lsp-java-configuration-check-project-settings-exclusions nil)
 
@@ -114,8 +147,9 @@
   :ensure t
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp-deferred))))  ; or lsp-deferred;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                         (require 'lsp-python-ms)
+                         (lsp-deferred))))
+
 (add-hook 'python-mode
 	  (lambda ()(setq python-indent-offset 2)))
 
@@ -130,7 +164,7 @@
 ;; Snippets
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package yasnippet
-   :ensure t)
+  :ensure t)
 (yas-global-mode 1)
 
 
@@ -149,29 +183,51 @@
   :mode "[\\.]Dockerfile")
 (use-package lsp-docker
   :ensure t)
+(use-package docker-compose-mode
+  :ensure t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MDX
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package poly-markdown
   :ensure t)
-
-
-
-(defcustom poly-inner-typescript-mode
-  (typescript-mode)
-  "MDX mode for typescript"
-  :group 'poly-innermodes
-  :type 'object)
-
-
-(define-polymode poly-markdown-typescript-mode poly-markdown-mode
-  :innermodes '(poly-inner-typescript-mode :inherit))
-
-
-(add-to-list 'auto-mode-alist '("\\.mdx" . poly-markdown-typescript-mode))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Auto-format
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package format-all
   :ensure t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Protocol buff
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package protobuf-mode
+  :ensure t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Flycheck
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package exec-path-from-shell
+  :ensure t
+  :custom
+  (exec-path-from-shell-check-startup-files nil)
+  :config
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (exec-path-from-shell-initialize))
+
+;; Make sure the local node_modules/.bin/ can be found (for eslint)
+;; https://github.com/codesuki/add-node-modules-path
+(use-package add-node-modules-path
+  :ensure t
+  :config
+  ;; automatically run the function when web-mode starts
+  (eval-after-load 'typescript-mode
+    '(add-hook 'typescript-mode-hook 'add-node-modules-path)))
+;; 
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode)
+  ;; disable jshint since we prefer eslint checking
+  (setq-default flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint)))
+  ;; use eslint with web-mode for jsx files
+  (flycheck-add-mode 'javascript-eslint 'typescript-mode))

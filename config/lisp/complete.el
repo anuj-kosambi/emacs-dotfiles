@@ -8,12 +8,13 @@
 ;; (use-package company-capf
 ;;   :ensure t)
 
+(setq company-lsp-cache-candidates 'auto)
+
 (add-to-list 'company-backends 'company-capf)
 (add-to-list 'company-backends 'company-dabbrev)
 
-;; (use-package company-try-hard
-;;   :ensure t
-;;   )
+(use-package company-try-hard
+  :ensure t)
 
 (use-package company-box
     :ensure t
