@@ -11,7 +11,6 @@
 (setq company-lsp-cache-candidates 'auto)
 
 (add-to-list 'company-backends 'company-capf)
-(add-to-list 'company-backends 'company-dabbrev)
 
 (use-package company-try-hard
   :ensure t)
@@ -19,6 +18,7 @@
 (use-package company-box
   :ensure t
   :defer t
+  :after company
   :diminish
   :functions (all-the-icons-faicon
 	      all-the-icons-material

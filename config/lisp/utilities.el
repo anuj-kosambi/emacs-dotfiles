@@ -74,15 +74,9 @@
 
 (use-package ivy-rich
   :ensure t
-  :after ivy
-  :custom
-  (ivy-virtual-abbreviate 'full
-                          ivy-rich-switch-buffer-align-virtual-buffer t
-                          ivy-rich-path-style 'abbrev)
   :config
-  (ivy-set-display-transformer 'ivy-switch-buffer
-			       'ivy-rich-switch-buffer-transformer)
-  (setq ivy-rich-path-style 'abbrev)
+  (setq ivy-virtual-abbreviate 'abbreviate
+	ivy-rich-path-style 'abbrev)
   (ivy-rich-mode 1)
   )
 
@@ -103,6 +97,9 @@
    ivy-posframe-height 20
    ivy-posframe-border-width 3)
 
+  (setq ivy-posframe-height-alist '((swiper . 20)
+                                    (t      . 20)))
+
   (setq ivy-posframe-display-functions-alist
 	'((swiper     . ivy-posframe-display-at-frame-center)
           (t               . ivy-posframe-display-at-frame-center)))
@@ -121,8 +118,6 @@
   :config
   (all-the-icons-ivy-setup))
 
-(setq all-the-icons-ivy-file-commands
-      '(counsel-find-file counsel-file-jump counsel-recentf counsel-projectile-find-file counsel-projectile-find-dir))
 
 (use-package all-the-icons-dired
   :after all-the-icons
@@ -171,3 +166,21 @@
                        (lambda ()
                          (message "Garbage Collector has run for %.06fsec"
                                   (k-time (garbage-collect))))))
+
+
+(use-package treemacs
+  :ensure t)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Copy filename to clipboard
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun er-copy-file-name-to-clipboard ()
+  "Copy the current buffer file name to the clipboard."
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))

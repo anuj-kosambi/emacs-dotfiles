@@ -1,8 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Prettier & Highlight
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package prettier-js
-  :ensure t)
+;; (use-package prettier-js
+;;   :ensure t)
 
 (use-package tree-sitter
   :ensure t)
@@ -25,19 +25,19 @@
   (setq web-mode-enable-css-colorization t)
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
-(add-hook 'web-mode-hook 'prettier-js-mode)
+;; (add-hook 'web-mode-hook 'prettier-js-mode)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Typescript
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package typescript-mode
   :ensure t
-  :mode "\\.ts.$"
+  :mode "\\.[jt]s.$"
   :hook (typescript-mode . lsp-deferred)
   :config)
 
 (add-hook 'typescript-mode-hook #'tree-sitter-hl-mode)
-(add-hook 'typescript-mode-hook 'prettier-js-mode)
+;; (add-hook 'typescript-mode-hook 'prettier-js-mode)
 
 (add-to-list 'auto-mode-alist '("\\.js" . web-mode)) ;; auto-enable for .js/.jsx files
 (add-to-list 'auto-mode-alist '("\\.jsx" . web-mode)) ;; auto-enable for .js/.jsx files
@@ -58,7 +58,8 @@
   :after (typescript-mode company flycheck)
   :hook ((typescript-mode . tide-setup)
          (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save)))
+         ;; (before-save . tide-format-before-save)
+	 ))
 
 (use-package json-mode
   :ensure t)
@@ -89,11 +90,11 @@
   (lsp-completion-provider :none)
   (lsp-file-watch-threshold 1500)  ; pyright has more than 1000
   (lsp-enable-links nil)
+
   ;; Maybe set in future:
   ;;(lsp-enable-on-type-formatting nil)
   :hook
   (lsp-mode . lsp-enable-which-key-integration))
-
 
 (use-package lsp
   :ensure lsp-mode
@@ -102,6 +103,11 @@
   (add-hook 'lsp-after-open-hook 'lsp-enable-imenu)
   (add-hook 'lsp-after-open-hook 'lsp-headerline-breadcrumb-mode)
   :init
+  (setq lsp-idle-delay 0.500)
+  ;;(setq lsp-enable-file-watchers nil)
+  (setq lsp-print-performance t)
+  (setq lsp-log-io nil)
+  (setq lsp-completion-provider :capf)
   (setq lsp-eldoc-render-all nil))
 
 (setq read-process-output-max (* 1024 1024)) ; 1mb
@@ -119,7 +125,7 @@
   (lsp-ui-peek-highlight ((t (:inherit nil :background nil :foreground nil :weight semi-bold :box (:line-width -1)))))
   :bind
   ([remap xref-find-references] . lsp-ui-peek-find-references)
-  ("M-b" . lsp-find-definition)
+  ("M-b" . lsp-ui-peek-find-definitions)
   :config
   ;;;; LSP UI posframe ;;;;
   )
@@ -232,7 +238,7 @@
   ;; automatically run the function when web-mode starts
   (eval-after-load 'typescript-mode
     '(add-hook 'typescript-mode-hook 'add-node-modules-path)))
-;; 
+;;
 (use-package flycheck
   :ensure t
   :config
@@ -241,3 +247,12 @@
   (setq-default flycheck-disabled-checkers (append flycheck-disabled-checkers '(javascript-jshint)))
   ;; use eslint with web-mode for jsx files
   (flycheck-add-mode 'javascript-eslint 'typescript-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Terraform
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package terraform-mode
+  :ensure t
+  :config
+  (custom-set-variables
+   '(terraform-indent-level 4)))

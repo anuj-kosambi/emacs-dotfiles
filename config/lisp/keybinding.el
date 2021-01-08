@@ -1,11 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Keybinding User 
+;; Keybinding User
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
 (define-key evil-normal-state-map (kbd "SPC i") 'counsel-imenu)
 (define-key evil-normal-state-map (kbd "SPC l") 'swiper)
-(define-key evil-normal-state-map (kbd "g d") 'lsp-find-definition)
 (define-key evil-visual-state-map (kbd "SPC c t") 'comment-or-uncomment-region)
 (define-key evil-visual-state-map (kbd "M-/") 'comment-or-uncomment-region)
 (global-set-key (kbd "M-f") 'avy-goto-word-1)
@@ -17,7 +16,7 @@
 ;; (global-set-key (kbd "M-K") 'profiler-stop)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; git 
+;; git
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (global-set-key (kbd "M-g s") 'magit)
 (global-set-key (kbd "M-g l") 'magit-log-all)
@@ -28,6 +27,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key evil-normal-state-map (kbd "SPC p p") 'counsel-projectile-switch-project)
 (define-key evil-normal-state-map (kbd "SPC SPC") 'counsel-projectile-find-file)
+(global-set-key (kbd "M-O") 'counsel-projectile-find-file)
 (define-key evil-normal-state-map (kbd "SPC .") 'counsel-find-file)
 (define-key evil-normal-state-map (kbd "SPC b b") 'counsel-projectile-switch-to-buffer)
 
@@ -68,3 +68,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (define-key evil-normal-state-map (kbd "SPC TAB") 'yafolding-toggle-element)
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Treemas keybinding
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -2,14 +2,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(column-number-mode t)
-
-(use-package nlinum
-  :ensure t
-  :config
-	(setq nlinum-format "%8d")
-  (global-nlinum-mode))
+(setq line-spacing 0.4)
 (size-indication-mode t)
+
+(add-hook 'after-change-major-mode-hook
+	  (lambda ()
+	    (setq line-spacing 0.4)
+	    (display-line-numbers-mode)
+	    ))
 
 (toggle-scroll-bar 0)
 (tool-bar-mode 0)
@@ -18,28 +18,29 @@
 
 (setq ring-bell-function 'ignore)
 
-;; (setq backup-directory-alist
-;;      `((".*" . temporary-file-directory))
-;;      auto-save-file-name-transforms
-;;     `((".*" ,temporary-file-directory t)))
-
 (setq-default left-fringe-width  0)
 (setq-default right-fringe-width  0)
 (set-face-attribute 'fringe nil :background "black")
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   (setq doom-themes-enable-bold t
-;; 	doom-themes-enable-italic t)
-;;   (load-theme 'doom-oceanic-next t)
-;;   (doom-themes-org-config))
-
-(use-package dracula-theme
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Themes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package doom-themes
   :ensure t
-	:config
-  (load-theme 'dracula))
+  :config
+  (setq doom-themes-enable-bold t
+	doom-themes-enable-italic t)
+  (load-theme 'doom-horizon t)
+  (doom-themes-org-config))
 
+;; (set-face-attribute 'link nil :foreground   "#cd5c5c")
+;; (set-face-attribute 'mode-line-emphasis nil :foreground   "#cd5c5c")
+;; (set-face-attribute 'cursor nil :background   "#cd5c5c")
+(set-face-attribute 'default nil :background   "#212121")
+;;(set-face-attribute 'ivy-posframe nil :background   "#292929")
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Modeline
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package doom-modeline
   :ensure t
   :hook (after-init . doom-modeline-mode)
@@ -52,9 +53,6 @@
 
 (setq doom-modeline-height 16)
 
-;; (setq linum-format "%10d")
-(global-linum-mode 0)
-;;(setq global-tab-line-mode 0)
 (setq tab-width 2)
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
@@ -78,4 +76,3 @@
 (setq create-lockfiles nil)
 
 (show-paren-mode)
-
