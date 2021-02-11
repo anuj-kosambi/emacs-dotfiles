@@ -91,11 +91,11 @@
 
 (use-package ivy-posframe
   :ensure t
-  :custom-face
   :config
   (setq
    ivy-posframe-height 20
-   ivy-posframe-border-width 3)
+   ivy-posframe-width 160
+   ivy-posframe-border-width 30)
 
   (setq ivy-posframe-height-alist '((swiper . 20)
                                     (t      . 20)))
@@ -169,17 +169,28 @@
 
 
 (use-package treemacs
+  :ensure t
+  :config
+  (treemacs-set-width 50))
+
+
+(add-hook 'treemacs-mode-hook
+	  (lambda ()
+	    (treemacs-tag-follow-mode -1)	    ))
+
+(use-package treemacs-magit
+  :after treemacs magit
   :ensure t)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Copy filename to clipboard
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun er-copy-file-name-to-clipboard ()
+(defun copy-buffer-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
   (interactive)
   (let ((filename (if (equal major-mode 'dired-mode)
-                      default-directory
+		      default-directory
                     (buffer-file-name))))
     (when filename
       (kill-new filename)

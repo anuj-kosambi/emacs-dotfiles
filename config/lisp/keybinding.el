@@ -5,15 +5,17 @@
 
 (define-key evil-normal-state-map (kbd "SPC i") 'counsel-imenu)
 (define-key evil-normal-state-map (kbd "SPC l") 'swiper)
-(define-key evil-visual-state-map (kbd "SPC c t") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-x M-e SPC l") 'swiper)
+(define-key evil-visual-state-map (kbd "spc c t") 'comment-or-uncomment-region)
 (define-key evil-visual-state-map (kbd "M-/") 'comment-or-uncomment-region)
 (global-set-key (kbd "M-f") 'avy-goto-word-1)
 
 (global-set-key (kbd "M-L") 'format-all-buffer)
 
 
-;; (global-set-key (kbd "M-I") 'profiler-start)
-;; (global-set-key (kbd "M-K") 'profiler-stop)
+(global-set-key (kbd "M-I") 'profiler-start)
+(global-set-key (kbd "M-K") 'profiler-stop)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; git
