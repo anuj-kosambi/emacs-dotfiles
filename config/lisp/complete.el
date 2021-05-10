@@ -8,7 +8,7 @@
 ;; (use-package company-capf
 ;;   :ensure t)
 
-(setq company-lsp-cache-candidates 'auto)
+;; (setq company-lsp-cache-candidates 'auto)
 
 (add-to-list 'company-backends 'company-capf)
 

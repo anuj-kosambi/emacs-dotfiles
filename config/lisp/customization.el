@@ -30,7 +30,7 @@
   :config
   (setq doom-themes-enable-bold t
 	doom-themes-enable-italic t)
-  (load-theme 'doom-horizon t)
+  (load-theme 'doom-material t)
   (doom-themes-org-config))
 
 
@@ -40,7 +40,7 @@
 		:inherit nil
 		:extend nil
 		:stipple nil
-		:background "#212121"
+		;;:background "#212121"
 		:foreground "#c7c9cb"
 		:inverse-video nil
 		:box nil
@@ -53,6 +53,7 @@
 		:width normal
 		:foundry "CTDB"
 		:family "Fira Code"))))
+ (set-face-attribute 'default nil :background   "#2a2c39")
  (set-face-attribute 'default nil :background   "#212121")
  ;; '(font-lock-variable-name-face ((t (:foreground "medium aquamarine"))))
  '(highlight ((t (:background "indian red" :foreground "#1b1d1e"))))
@@ -86,11 +87,6 @@
   (scroll-bar-mode -1)
   (tooltip-mode -1))
 
-(use-package dimmer
-  :ensure t
-  :custom (dimmer-fraction 0.1)
-  :config (dimmer-mode))
-
 (global-hl-line-mode)
 
 ;; store all backup and autosave files in the tmp dir
@@ -101,3 +97,7 @@
 (setq create-lockfiles nil)
 
 (show-paren-mode)
+
+
+;;(set-frame-parameter (selected-frame) 'alpha '(95 100))
+;;(add-to-list 'default-frame-alist '(alpha 95 100))

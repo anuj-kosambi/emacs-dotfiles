@@ -1,7 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Keybinding User
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+(if (display-graphic-p)
+      (global-set-key (kbd "<escape>") 'keyboard-escape-quit))
 
 (define-key evil-normal-state-map (kbd "SPC i") 'counsel-imenu)
 (define-key evil-normal-state-map (kbd "SPC l") 'swiper)
@@ -58,9 +59,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Lsp
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "M-\\") 'treemacs)
+(global-set-key (kbd "M-\\") 'treemacs-find-file)
 (define-key evil-normal-state-map (kbd "M-g M-d") 'lsp-ui-peek-find-definitions)
-(define-key evil-normal-state-map (kbd "M-g M-r") 'lsp-ui-peek-find-references)
+(define-key evil-normal-state-map (kbd "M-g M-r") 'lsp-treemacs-references)
 (define-key evil-normal-state-map (kbd "M-s M-s") 'lsp-treemacs-symbols)
 (define-key evil-normal-state-map (kbd "M-F") 'counsel-git-grep)
 
@@ -71,7 +72,7 @@
 
 (define-key evil-normal-state-map (kbd "SPC TAB") 'yafolding-toggle-element)
 
-
+(global-set-key (kbd "M-m") 'counsel-yank-pop)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Treemas keybinding
