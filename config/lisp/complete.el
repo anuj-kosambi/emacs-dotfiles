@@ -1,7 +1,9 @@
+
+
 (use-package company
   :ensure t
   :config
-  (setq company-idle-delay 0)
+  (setq company-idle-delay 0.250)
   (setq company-minimum-prefix-length 0)
   (global-company-mode +1))
 
