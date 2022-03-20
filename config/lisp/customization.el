@@ -1,8 +1,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; User Settings
+;;; User Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq line-spacing 0.4)
+(setq line-spacing 1)
 (size-indication-mode t)
 
 (add-hook 'after-change-major-mode-hook
@@ -20,18 +20,25 @@
 
 (setq-default left-fringe-width  0)
 (setq-default right-fringe-width  0)
-(set-face-attribute 'fringe nil :background "black")
+;; (set-face-attribute 'fringe nil :background "black")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Themes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t
-	doom-themes-enable-italic t)
-  (load-theme 'doom-material t)
-  (doom-themes-org-config))
+
+;;(use-package base16-themes
+;;  :ensure t)
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   (setq doom-themes-enable-bold t
+;; 	doom-themes-enable-italic t)
+;;   (load-theme 'doom-material t)
+;;   (doom-themes-org-config))
+
+
+(load-theme 'base16-material-darker t)
 
 
 
@@ -53,17 +60,18 @@
 		:width normal
 		:foundry "CTDB"
 		:family "Fira Code"))))
- (set-face-attribute 'default nil :background   "#2a2c39")
- (set-face-attribute 'default nil :background   "#212121")
- ;; '(font-lock-variable-name-face ((t (:foreground "medium aquamarine"))))
- '(highlight ((t (:background "indian red" :foreground "#1b1d1e"))))
- '(ivy-current-match ((t (:extend t :background "#000022"))))
- '(ivy-posframe ((t (:background "#292929"))))
- '(ivy-posframe-border ((t nil)))
- '(link ((t (:foreground "indian red" :underline t :weight bold))))
+
+ ;; (set-face-attribute 'default nil :background   "#2a2c39")
+ ;;  (set-face-attribute 'default nil :background   "#212121")
+ ;; ;; '(font-lock-variable-name-face ((t (:foreground "medium aquamarine"))))
+ ;; '(highlight ((t (:background "indian red" :foreground "#1b1d1e"))))
+ ;; '(ivy-current-match ((t (:extend t :background "#000022"))))
+ ;; '(ivy-posframe ((t (:background "#292929"))))
+ ;; '(ivy-posframe-border ((t nil)))
+ ;; '(link ((t (:foreground "indian red" :underline t :weight bold))))
  '(lsp-ui-peek-highlight ((t (:inherit nil :background nil :foreground nil :weight semi-bold :box (:line-width -1))))))
 
-(set-face-attribute 'region nil :background "#000022")
+;; (set-face-attribute 'region nil :background "#000022")
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Modeline
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -17,6 +17,9 @@
   :config
   (global-git-gutter-mode +1))
 
+(use-package elfeed
+  :ensure t)
+
 (use-package git-timemachine
   :ensure t
   :config

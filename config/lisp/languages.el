@@ -60,6 +60,11 @@
          (typescript-mode . tide-hl-identifier-mode)
          ;; (before-save . tide-format-before-save)
 	 ))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Style
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package lsp-tailwindcss
+  :ensure t)
 
 (use-package json-mode
   :ensure t)
@@ -118,7 +123,7 @@
   :custom
   (lsp-ui-doc-position 'top)
   (lsp-ui-sideline-delay 0.5)
-  (lsp-ui-doc-delay 0.5)
+  (lsp-ui-doc-delay 5)
   (lsp-ui-peek-always-show t)
   (lsp-ui-peek-fontify 'always)
   :custom-face
@@ -164,24 +169,36 @@
   :init (setq lsp-python-ms-auto-install-server t)
   :hook (python-mode . (lambda ()
                          (require 'lsp-python-ms)
+			 (setq python-indent-offset 2)
                          (lsp-deferred))))
 
-(add-hook 'python-mode
-	  (lambda ()(setq python-indent-offset 2)))
-
-;;; elpy
-(use-package elpy
-  :ensure t
-  :defer t
-  :init
-  (advice-add 'python-mode :before 'elpy-enable))
+;; (use-package elpy
+;;   :ensure t
+;;   :defer t
+;;   :init
+;;   (advice-add 'python-mode :before 'elpy-enable))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Snippets
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package yasnippet
-  :ensure t)
-(yas-global-mode 1)
+  :commands (yas-minor-mode) ; autoload `yasnippet' when `yas-minor-mode' is called
+                                        ; using any means: via a hook or by user
+                                        ; Feel free to add more commands to this
+                                        ; list to suit your needs.
+  :init ; stuff to do before requiring the package
+  (progn
+    (add-hook 'python-mode-hook #'yas-minor-mode))
+  :config ; stuff to do after requiring the package
+  (progn
+    (yas-reload-all)))
+
+
+(use-package yasnippet-radical-snippets
+  :ensure t
+  :after yasnippet
+  :config
+  (yasnippet-radical-snippets-initialize))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -280,3 +297,11 @@
   :config
   (custom-set-variables
    '(terraform-indent-level 4)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Emacs
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package bazel
+  :ensure t
+  :config
+  )

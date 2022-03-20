@@ -2,7 +2,7 @@
 ;; Keybinding User
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (if (display-graphic-p)
-      (global-set-key (kbd "<escape>") 'keyboard-escape-quit))
+    (global-set-key (kbd "<escape>") 'keyboard-escape-quit))
 
 (define-key evil-normal-state-map (kbd "SPC i") 'counsel-imenu)
 (define-key evil-normal-state-map (kbd "SPC l") 'swiper)
@@ -30,15 +30,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define-key evil-normal-state-map (kbd "SPC p p") 'counsel-projectile-switch-project)
 (define-key evil-normal-state-map (kbd "SPC SPC") 'counsel-projectile-find-file)
-(global-set-key (kbd "M-O") 'counsel-projectile-find-file)
+;;(global-set-key (kbd "M-O") 'counsel-projectile-find-file)
 (define-key evil-normal-state-map (kbd "SPC .") 'counsel-find-file)
 (define-key evil-normal-state-map (kbd "SPC b b") 'counsel-projectile-switch-to-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Buffers
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(global-set-key (kbd "M-[") 'previous-buffer)
-(global-set-key (kbd "M-]") 'next-buffer)
+(global-set-key (kbd "C-M-[") 'previous-buffer)
+(global-set-key (kbd "C-M-]") 'next-buffer)
 (define-key evil-normal-state-map (kbd "M-e") 'counsel-recentf)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
